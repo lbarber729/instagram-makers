@@ -3,9 +3,9 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.4-node-jessie
+      - image: circleci/ruby:2.5.0
       - image: circleci/postgres:9.4.12-alpine
-    working_directory: ~/circleci-demo-workflows
+    working_directory: ~/circleci-instagram-makers
     steps:
       - checkout
       - run: bundle install --path vendor/bundle  # install dependencies
