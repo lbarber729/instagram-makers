@@ -1,7 +1,37 @@
 version: 2.1
+
 orbs:
-  heroku: circleci/heroku@1.0.0
+    hello: circleci/hello-build@0.0.7 # uses the circleci/buildpack-deps Docker image
+
 workflows:
-  heroku_deploy:
+    "Hello Workflow":
+        jobs:
+          - hello/hello-build
+
+          version: 2
+
+version: 2
+jobs:
+  build:
+    ...
+  deploy:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push https://heroku:03470dd2-1dea-4a27-bcf7-4f1e70b8f0f5@git.heroku.com/instagram-makers.git master
+
+workflows:
+  version: 2
+  build-deploy:
     jobs:
-      - heroku/deploy-via-git
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
