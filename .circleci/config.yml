@@ -8,6 +8,7 @@ jobs:
     working_directory: ~/circleci-instagram-makers
     steps:
       - checkout
+      - run: gem update --system
       - run: gem install bundler
       - run: bundle install --path vendor/bundle  # install dependencies
       - run: bundle exec rake db:create db:schema:load  # setup database
